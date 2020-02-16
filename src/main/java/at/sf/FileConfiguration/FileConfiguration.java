@@ -1,3 +1,5 @@
+package at.sf.FileConfiguration;
+
 import com.google.gson.*;
 
 import java.io.*;

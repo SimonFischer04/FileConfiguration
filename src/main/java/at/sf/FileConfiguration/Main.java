@@ -1,3 +1,5 @@
+package at.sf.FileConfiguration;
+
 import com.google.gson.JsonPrimitive;
 
 public class Main {
