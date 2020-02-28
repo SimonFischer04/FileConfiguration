@@ -2,14 +2,13 @@
   "a": {
     "b": {
       "c": {
-        "d": "1",
-        "e": {
-          "f": "1"
-        },
-        "ee": {
-          "f": "1"
-        }
-      }
+        "testPoint": "{\n  \"x\": 1,\n  \"y\": 2\n}"
+      },
+      "testString": "teeesssttt",
+      "testInt": 42,
+      "testDouble": 3.3333333333333335,
+      "testBoolean": true,
+      "testChar": "A"
     }
   }
 }
