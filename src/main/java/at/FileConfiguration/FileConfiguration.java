@@ -1,36 +1,62 @@
-package at.sf.FileConfiguration;
+package at.FileConfiguration;
 
 import com.google.gson.*;
 
 import java.io.*;
 
 public class FileConfiguration {
-    private String path;
+    private final File file;
+    private final String jsonString;
     private JsonObject jsonObject;
     private Gson gson;
 
-    private boolean prettyPrint, autoSave;
+    private final boolean prettyPrint, autoSave;
 
-    public FileConfiguration(String path, boolean prettyPrint, boolean autoSave) {
-        this.path = path;
+    private FileConfiguration(File file, String jsonString, boolean prettyPrint, boolean autoSave) {
+        this.file = file;
+        this.jsonString = jsonString;
         this.prettyPrint = prettyPrint;
         this.autoSave = autoSave;
 
         load();
     }
 
-    public FileConfiguration(String path) {
-        this(path, true, true);
+    public FileConfiguration(File file, boolean prettyPrint, boolean autoSave) {
+        this(file, null, prettyPrint, autoSave);
+    }
+
+    public FileConfiguration(File file) {
+        this(file, true, true);
+    }
+
+
+    public FileConfiguration(String jsonString, boolean prettyPrint, boolean autoSave) {
+        this(null, jsonString, prettyPrint, autoSave);
+    }
+
+    public FileConfiguration(String jsonString) {
+        this(jsonString, true, true);
+    }
+
+    public static FileConfiguration fromPath(String path, boolean prettyPrint, boolean autoSave) {
+        return new FileConfiguration(new File(path), prettyPrint, autoSave);
+    }
+
+    public static FileConfiguration fromPath(String path) {
+        return FileConfiguration.fromPath(path, true, true);
     }
 
     public void load() {
-        File f = new File(path);
         StringBuilder jsonBuilder = new StringBuilder();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(f));
-            reader.lines().forEach(jsonBuilder::append);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (file != null) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                reader.lines().forEach(jsonBuilder::append);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            jsonBuilder.append(jsonString);
         }
 
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -64,25 +90,25 @@ public class FileConfiguration {
         return getJsonPrimitive(key).getAsDouble();
     }
 
-    public Boolean getBoolean(String key){
+    public Boolean getBoolean(String key) {
         return getJsonPrimitive(key).getAsBoolean();
     }
 
     public JsonObject getJsonObject(String key) {
         String[] subTypes = key.split("\\.");
         JsonObject object = jsonObject;
-        for (int i = 0; i < subTypes.length; i++) {
-            if (!object.has(subTypes[i]) && !(object.get(subTypes[i]) instanceof JsonObject)) {
+        for (String subType : subTypes) {
+            if (!object.has(subType) && !(object.get(subType) instanceof JsonObject)) {
                 return null;
             }
-            object = object.get(subTypes[i]).getAsJsonObject();
+            object = object.get(subType).getAsJsonObject();
         }
         return object;
     }
 
     public JsonPrimitive getJsonPrimitive(String key) {
         String[] subTypes = key.split("\\.");
-        JsonObject object = getJsonObject(key.substring(0, key.lastIndexOf(".")));
+        JsonObject object = (subTypes.length == 1 ? jsonObject : getJsonObject(key.substring(0, key.lastIndexOf("."))));
         return gson.fromJson(object.get(subTypes[subTypes.length - 1]), JsonPrimitive.class);
     }
 
@@ -111,13 +137,13 @@ public class FileConfiguration {
          */
         if (value instanceof Number) {
             currObject.addProperty(subtypes[subtypes.length - 1], (Number) value);
-        } else if(value instanceof String) {
+        } else if (value instanceof String) {
             currObject.addProperty(subtypes[subtypes.length - 1], (String) value);
-        } else if(value instanceof Boolean) {
+        } else if (value instanceof Boolean) {
             currObject.addProperty(subtypes[subtypes.length - 1], (Boolean) value);
-        } else if(value instanceof Character) {
+        } else if (value instanceof Character) {
             currObject.addProperty(subtypes[subtypes.length - 1], (Character) value);
-        }else{
+        } else {
             currObject.addProperty(subtypes[subtypes.length - 1], gson.toJson(value));
         }
 
@@ -126,14 +152,20 @@ public class FileConfiguration {
         }
     }
 
-    public void save() {
+    public void save(String path) {
+        if (path == null && file == null)
+            throw new RuntimeException("If you want to save a configuration that was created using a json String, you must specify a File path");
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+            BufferedWriter bw = new BufferedWriter(new FileWriter((file != null ? file.getAbsolutePath() : path)));
             bw.write(gson.toJson(jsonObject));
             bw.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void save() {
+        save(null);
     }
 
     public void clear() {

@@ -1,20 +1,14 @@
-package at.sf.FileConfiguration;
+package at.FileConfiguration;
 
 import com.google.gson.*;
-
-import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         //new JsonObject()
         System.out.println(System.getProperty("user.dir"));
-        FileConfiguration conf = new FileConfiguration("test.json", true, true);
+        FileConfiguration conf = FileConfiguration.fromPath("test.json", true, true);
         conf.clear();
-
-        conf.set("a.b.c.testPoint", new Point(1, 2));
-        Point p = conf.get("a.b.c.testPoint", Point.class);
-        System.out.println("Point p = " + p);
 
         conf.set("a.b.testString", "teeesssttt");
         System.out.println("conf.getString(\"a.b.testString\") = " + conf.getString("a.b.testString"));
@@ -44,6 +38,11 @@ public class Main {
         System.out.println("char c = " + c);
         String cs = conf.getString("a.b.testChar");
         System.out.println("String cs = " + cs);
+
+        System.out.println("-".repeat(50));
+
+        FileConfiguration conf2 = new FileConfiguration("{  \"name\": \"SamplePlugin\",  \"main\": \"Main\"}");
+        System.out.println("conf2.getString(\"name\") = " + conf2.getString("name"));
 
     }
 }

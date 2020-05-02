@@ -1,9 +1,6 @@
 {
   "a": {
     "b": {
-      "c": {
-        "testPoint": "{\n  \"x\": 1,\n  \"y\": 2\n}"
-      },
       "testString": "teeesssttt",
       "testInt": 42,
       "testDouble": 3.3333333333333335,
