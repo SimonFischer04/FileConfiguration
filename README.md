@@ -18,3 +18,6 @@ will create a config that looks like this:
 - conf.getString("a.b.c")
 
 will return it ("test") again
+
+#TODO:
+- add Documentation/JavaDoc
