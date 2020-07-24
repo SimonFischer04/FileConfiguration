@@ -1,4 +1,4 @@
-package at.FileConfiguration;
+package com.github.simonfischer04;
 
 import com.google.gson.*;
 

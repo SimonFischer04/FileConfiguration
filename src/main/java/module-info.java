@@ -1,4 +1,4 @@
 module FileConfiguration{
     requires com.google.gson;
-    exports at.FileConfiguration;
+    exports com.github.simonfischer04;
 }
