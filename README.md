@@ -19,5 +19,6 @@ will create a config that looks like this:
 
 will return it ("test") again
 
-#TODO:
+## TODO:
+---
 - add Documentation/JavaDoc
