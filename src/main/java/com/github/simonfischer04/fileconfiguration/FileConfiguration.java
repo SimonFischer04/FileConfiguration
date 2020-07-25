@@ -1,4 +1,4 @@
-package com.github.simonfischer04;
+package com.github.simonfischer04.fileconfiguration;
 
 import com.google.gson.*;
 
