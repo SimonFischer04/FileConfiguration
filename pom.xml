@@ -4,7 +4,7 @@
 
     <groupId>com.github.simonfischer04</groupId>
     <artifactId>FileConfiguration</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>Simple JSON Tool</name>
     <description>This is a simple tool to easily work with GSON</description>
@@ -125,7 +125,7 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git://github.com/simonfischer04/fileconfiguration.git</connection>
+        <connection>scm:git:ssh://github.com/simonfischer04/fileconfiguration.git</connection>
         <developerConnection>scm:git:ssh://github.com:simonfischer04/fileconfiguration.git</developerConnection>
         <url>https://github.com/simonfischer04/fileconfiguration</url>
       <tag>1.0.2</tag>
