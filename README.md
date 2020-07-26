@@ -22,3 +22,8 @@ will return it ("test") again
 ## TODO:
 ---
 - add Documentation/JavaDoc
+
+---
+(This is also my first project to test publishing to maven)
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.simonfischer04/FileConfiguration.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.simonfischer04%22%20AND%20a:%22FileConfiguration%22)
