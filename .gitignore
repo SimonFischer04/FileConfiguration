@@ -4,5 +4,4 @@
 .idea/
 MANIFEST.MF
 out/
-test.json
-src/main/java/com/github/simonfischer04/fileconfiguration/Main.java
+/pom.xml.versionsBackup
