@@ -5,6 +5,7 @@ Special about this library is that you can easily create "sub-json-objects" by u
 
 ## Example:
 ---
+FileConfiguration conf = new FileConfiguration(new File("conf.json"));
 - conf.set("a.b.c", "test");
   
 will create a config that looks like this:
@@ -22,6 +23,7 @@ will return it ("test") again
 ## TODO:
 ---
 - add Documentation/JavaDoc
+- add option to automatically create file if not existing
 
 ---
 (This is also my first project to test publishing to maven)
